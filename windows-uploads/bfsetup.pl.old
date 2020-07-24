@@ -1,0 +1,84 @@
+
+
+use strict;
+
+my $vcenv = <<'ENV';
+      PERL5LIB => 'c:/prog/bf/p5lib',
+      CommandPromptType  =>  'Native',
+      DevEnvDir  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE',
+      ExtensionSdkDir  =>  'C:\Program Files (x86)\Microsoft SDKs\Windows Kits\10\ExtensionSDKs',
+      Framework40Version  =>  'v4.0',
+      FrameworkDir  =>  'C:\Windows\Microsoft.NET\Framework64',
+      FrameworkDIR64  =>  'C:\Windows\Microsoft.NET\Framework64',
+      FrameworkVersion  =>  'v4.0.30319',
+      FrameworkVersion64  =>  'v4.0.30319',
+      IFCPATH  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\ifc\x64',
+      INCLUDE  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\ATLMFC\include;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\include;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\ucrt;C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\shared;C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\winrt;C:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\cppwinrt',
+      LIB  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\ATLMFC\lib\x64;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\lib\x64;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\lib\um\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.17134.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.17134.0\um\x64;',
+      LIBPATH  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\ATLMFC\lib\x64;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\lib\x64;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\lib\x86\store\references;C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.17134.0;C:\Program Files (x86)\Windows Kits\10\References\10.0.17134.0;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;',
+      NETFXSDKDir  =>  'C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1',
+      Path  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726\bin\HostX64\x64;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\bin\Roslyn;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\;C:\Program Files (x86)\Windows Kits\10\bin\10.0.17134.0\x64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\\MSBuild\15.0\bin;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE\;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\Tools\;C:\Perl64\site\bin;C:\Perl64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Amazon\cfn-bootstrap\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\vim\vim80;C:\Program Files\Git\cmd;C:\tools\sed\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;C:\prog\3p64\bin',
+      Platform  =>  'x64',
+      UCRTVersion  =>  '10.0.17134.0',
+      UniversalCRTSdkDir  =>  'C:\Program Files (x86)\Windows Kits\10',
+      VCIDEInstallDir  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\IDE\VC',
+      VCINSTALLDIR  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC',
+      VCToolsInstallDir  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Tools\MSVC\14.15.26726',
+      VCToolsRedistDir  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Redist\MSVC\14.15.26706',
+      VCToolsVersion  =>  '14.15.26726',
+      VisualStudioVersion  =>  '15.0',
+      VS150COMNTOOLS  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\Common7\Tools',
+      VSCMD_ARG_app_plat  =>  'Desktop',
+      VSCMD_ARG_HOST_ARCH  =>  'x64',
+      VSCMD_ARG_TGT_ARCH  =>  'x64',
+      VSCMD_VER  =>  '15.0',
+      VSINSTALLDIR  =>  'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools',
+      WindowsLibPath  =>  'C:\Program Files (x86)\Windows Kits\10\UnionMetadata\10.0.17134.0;C:\Program Files (x86)\Windows Kits\10\References\10.0.17134.0',
+      WindowsSdkBinPath  =>  'C:\Program Files (x86)\Windows Kits\10\bin',
+      WindowsSdkDir  =>  'C:\Program Files (x86)\Windows Kits\10',
+      WindowsSDKLibVersion  =>  '10.0.17134.0',
+      WindowsSdkVerBinPath  =>  'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17134.0',
+      WindowsSDKVersion  =>  '10.0.17134.0',
+      WindowsSDK_ExecutablePath_x64  =>  'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64',
+      WindowsSDK_ExecutablePath_x86  =>  'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools',
+      __DOTNET_ADD_64BIT  =>  '1',
+      __DOTNET_PREFERRED_BITNESS  =>  '64',
+      __VSCMD_PREINIT_PATH  =>  'C:\Perl64\site\bin;C:\Perl64\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Amazon\cfn-bootstrap\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\vim\vim80;C:\Program Files\Git\cmd;C:\tools\sed\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;',
+ENV
+
+
+local $/ = undef;
+
+open (my $handle, "<" , "build-farm.conf.sample") || die "$!";
+
+my $conf = <$handle>;
+
+close $handle;
+
+# perl reminder: re flags:
+# m makes ^ and $ match start/end of lines instead of start/end of string
+# s makes . match embedded newlines
+
+do
+{
+	s/CHANGEME/testvc64/g;
+	s!build_root =>.*!build_root => '/prog/bf/root',!,
+	s/using_msvc.*/using_msvc => 1,/;
+	# looks like line noise - fill in all the env settings in place
+	s/(?<=\%extra_buildenv.=.[(].).*?(?=[)];)/$vcenv/s;
+	s/tcl.*=>.*/tcl => undef,/;
+	s/python.*=>.*/python => undef,/;
+	s/perl.*=>.*/perl => 'c:\\perl64',/;
+	s/zlib.*=>.*/zlib => 'c:\\prog\\3p64',/;
+    # use git's gnu tar
+	s/tar_log_command.=>.*/tar_log_command => '"c:\Program Files\Git\usr\bin\tar" -z -cf runlogs.tgz *.log',/;
+	
+} foreach ($conf);
+
+mkdir "root";
+
+open($handle, ">" ,"testvc64.conf");
+print $handle $conf;
+close $handle;
+
+

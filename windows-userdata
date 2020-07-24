@@ -1,0 +1,22 @@
+<powershell>
+
+  # mostly cribbed from internet sources
+
+  # allow remote operations
+  Enable-PSRemoting -Force
+
+  # make sure you have an AWS security group that only allows WinRM
+  # from trusted networks, otherwise this is quite dangerous
+  netsh advfirewall firewall add rule name="WinRM HTTP" dir=in localport=5985 protocol=TCP action=allow
+
+  # Disable Internet Explorer Security
+  # http://stackoverflow.com/a/9368555/2067999
+  $AdminKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}"
+  $UserKey = "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}"
+  Set-ItemProperty -Path $AdminKey -Name "IsInstalled" -Value 0
+  Set-ItemProperty -Path $UserKey -Name "IsInstalled" -Value 0
+
+  # create a directory where vagrant file provisioners can stash data
+  New-Item -ItemType directory -Path C:\vfiles
+
+</powershell>
