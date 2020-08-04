@@ -1,0 +1,18 @@
+#!/bin/sh
+#[...]
+t=$(tempfile) || exit
+trap "rm -f -- '$t'" EXIT
+HOST=$1
+if [ -z "$HOST" ]
+then
+	grep -q 'config.vm.define.*"windows"' Vagrantfile && HOST=windows
+fi
+vagrant winrm-config $HOST > $t
+host=`grep RDPHostName "$t" | awk '{ print $2}'`
+user=`grep RDPUser "$t" | awk '{ print $2}'`
+pass=`grep RDPPassword "$t" | awk '{ print $2}'`
+echo "host=$host user=$user pass=$pass"
+sh -c "xfreerdp /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host &"
+rm -f -- "$t"
+trap - EXIT
+exit

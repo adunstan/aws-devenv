@@ -69,6 +69,30 @@ Vagrant.configure("2") do |config|
     end
   end
   
+  config.vm.define "windows-bare" do |windows|
+
+    windows.vm.communicator = "winrm"
+    windows.winrm.username = "Administrator"
+
+    windows.vm.provision "file", source: "windows-uploads",
+                         destination: 'c:\vfiles'
+    windows.vm.provision "shell", inline: <<-SHELL
+
+       Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+       SHELL
+    # windows.vm.provision :shell, path: "windows-provision.ps1"
+    
+    windows.vm.provider "aws" do |aws, override|
+      override.winrm.password = :aws # won't matter except for Windows
+      aws.region_config "us-west-2", :ami => WIN_AMI
+      # Enable WinRM on the instance
+      aws.user_data = File.read("windows-userdata")
+      aws.tags = { "Name" => "andrew windows dev" ,
+                   "Owner" => "Andrew Dunstan" }
+    end
+  end
+  
   config.vm.define "ubuntu" do |ubuntu|
 
     ubuntu.ssh.username = "ubuntu"

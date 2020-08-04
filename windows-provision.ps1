@@ -16,7 +16,7 @@ choco install -y --no-progress --limit-output msys2
 c:\tools\msys64\usr\bin\bash -l '/c/vfiles/uploads/msys2-packages.sh'
 
 # setup for MSVC build
-$utils = 'git', 'patch', 'Wget', 'Less', 'sed', 'winflexbison', '7zip', 'gzip', 'zip', 'unzip'
+$utils = 'git', 'hg', 'patch', 'Wget', 'Less', 'sed', 'winflexbison', '7zip', 'gzip', 'zip', 'unzip', 'diffutils'
 
 # setup for MSVC utils
 choco install -y --no-progress --limit-output @utils
@@ -27,4 +27,6 @@ Rename-Item -Path $cbin\win_flex.exe -NewName flex.exe
 refreshenv
 
 choco install -y --no-progress --limit-output visualstudio2019-workload-vctools --package-parameters "--includeOptional"
+# choco install -y --no-progress --limit-output visualstudio2019-workload-nativedesktop --package-parameters "--includeOptional"
+# choco install -y --no-progress --limit-output visualstudio2019-workload-nativegame --package-parameters "--includeOptional"
 
