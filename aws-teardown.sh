@@ -16,7 +16,7 @@ test -e ./settings && . ./settings
 # TODO: check the object exist before we try to delete them
 # For now, just ignore an error for a missing object
 
-if [ XTsecurityGroupId != X ]
+if [ X$securityGroupId != X ]
 then
 	aws ec2 delete-security-group --group-id $securityGroupId || true
 fi
