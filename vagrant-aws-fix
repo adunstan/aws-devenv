@@ -1,0 +1,1 @@
+wget https://github.com/mitchellh/vagrant-aws/commit/9c56a648559bd70dfe9ccd0fa7887b06b5722461.patch

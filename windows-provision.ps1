@@ -12,8 +12,8 @@ $perl = 'ActivePerl'
 choco install -y --no-progress --limit-output $perl
 
 # setup for msys2
-choco install -y --no-progress --limit-output msys2
-c:\tools\msys64\usr\bin\bash -l '/c/vfiles/uploads/msys2-packages.sh'
+# choco install -y --no-progress --limit-output msys2
+# c:\tools\msys64\usr\bin\bash -l '/c/vfiles/uploads/msys2-packages.sh'
 
 # setup for MSVC build
 $utils = 'git', 'hg', 'patch', 'Wget', 'Less', 'sed', 'winflexbison', '7zip', 'gzip', 'zip', 'unzip', 'diffutils'
@@ -26,7 +26,7 @@ Rename-Item -Path $cbin\win_flex.exe -NewName flex.exe
 
 refreshenv
 
-choco install -y --no-progress --limit-output visualstudio2019-workload-vctools --package-parameters "--includeOptional"
+choco install -y --no-progress --limit-output visualstudio2019-workload-vctools --install-args="--add Microsoft.VisualStudio.Component.VC.CLI.Support"
 # choco install -y --no-progress --limit-output visualstudio2019-workload-nativedesktop --package-parameters "--includeOptional"
 # choco install -y --no-progress --limit-output visualstudio2019-workload-nativegame --package-parameters "--includeOptional"
 

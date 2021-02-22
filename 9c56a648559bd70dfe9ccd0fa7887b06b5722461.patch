@@ -1,0 +1,53 @@
+From 9c56a648559bd70dfe9ccd0fa7887b06b5722461 Mon Sep 17 00:00:00 2001
+From: Michal Kubenka <mkubenka@gmail.com>
+Date: Wed, 27 Jul 2016 12:10:34 +0200
+Subject: [PATCH] Allow override region from Vagrantfile.
+
+---
+ lib/vagrant-aws/config.rb       |  4 ++--
+ spec/vagrant-aws/config_spec.rb | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/lib/vagrant-aws/config.rb b/lib/vagrant-aws/config.rb
+index 30a19cb..ba24b6e 100644
+--- a/lib/vagrant-aws/config.rb
++++ b/lib/vagrant-aws/config.rb
+@@ -323,8 +323,8 @@ def finalize!
+         if @access_key_id == UNSET_VALUE or @secret_access_key == UNSET_VALUE
+           @aws_profile = 'default' if @aws_profile == UNSET_VALUE
+           @aws_dir = ENV['HOME'].to_s + '/.aws/' if @aws_dir == UNSET_VALUE
+-          @region, @access_key_id, @secret_access_key, @session_token = Credentials.new.get_aws_info(@aws_profile, @aws_dir)
+-          @region = UNSET_VALUE if @region.nil?
++          @aws_region, @access_key_id, @secret_access_key, @session_token = Credentials.new.get_aws_info(@aws_profile, @aws_dir)
++          @region = @aws_region if @region == UNSET_VALUE and !@aws_region.nil?
+         else
+           @aws_profile = nil
+           @aws_dir = nil
+diff --git a/spec/vagrant-aws/config_spec.rb b/spec/vagrant-aws/config_spec.rb
+index eb30974..922a46e 100644
+--- a/spec/vagrant-aws/config_spec.rb
++++ b/spec/vagrant-aws/config_spec.rb
+@@ -219,6 +219,23 @@
+       its("access_key_id")         { should == "AKIdefault" }
+       its("secret_access_key")     { should == "PASSdefault" }
+       its("session_token")         { should be_nil }
++      its("region")                { should == "eu-west-1" }
++    end
++
++    context "with default profile and overriding region" do
++      subject do
++        allow(File).to receive(:exist?).and_return(true)
++        allow(File).to receive(:read).with(filename_cfg).and_return(data_cfg)
++        allow(File).to receive(:read).with(filename_keys).and_return(data_keys)
++        instance.region = "eu-central-1"
++        instance.tap do |o|
++          o.finalize!
++        end
++      end
++      its("access_key_id")         { should == "AKIdefault" }
++      its("secret_access_key")     { should == "PASSdefault" }
++      its("session_token")         { should be_nil }
++      its("region")                { should == "eu-central-1" }
+     end
+ 
+     context "without any credential environment variables and chosing a profile" do
