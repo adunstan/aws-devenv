@@ -1,4 +1,18 @@
 
+
+# Workaround https://github.com/mitchellh/vagrant-aws/issues/566
+class Hash
+  def slice(*keep_keys)
+    h = {}
+    keep_keys.each { |key| h[key] = fetch(key) if has_key?(key) }
+    h
+  end unless Hash.method_defined?(:slice)
+  def except(*less_keys)
+    slice(*keys - less_keys)
+  end unless Hash.method_defined?(:except)
+end
+
+
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'aws'
 
 subnetId=""
@@ -61,6 +75,7 @@ Vagrant.configure("2") do |config|
     
     windows.vm.provider "aws" do |aws, override|
       override.winrm.password = :aws # won't matter except for Windows
+      aws.ami = WIN_AMI
       aws.region_config "us-west-2", :ami => WIN_AMI
       # Enable WinRM on the instance
       aws.user_data = File.read("windows-userdata")
@@ -85,6 +100,7 @@ Vagrant.configure("2") do |config|
     
     windows.vm.provider "aws" do |aws, override|
       override.winrm.password = :aws # won't matter except for Windows
+      aws.ami = WIN_AMI
       aws.region_config "us-west-2", :ami => WIN_AMI
       # Enable WinRM on the instance
       aws.user_data = File.read("windows-userdata")
@@ -102,6 +118,7 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.provision :shell, path: "ubuntu-provision.sh"
 
     ubuntu.vm.provider "aws" do |aws, override|
+      aws.ami = UBUNTU_AMI
       aws.region_config "us-west-2", :ami => UBUNTU_AMI
       aws.tags = { "Name" => "andrew ubuntu dev" ,
                    "Owner" => "Andrew Dunstan" }
@@ -117,6 +134,7 @@ Vagrant.configure("2") do |config|
     centos.vm.provision :shell, path: "centos-provision.sh"
 
     centos.vm.provider "aws" do |aws, override|
+      aws.ami = CENTOS_AMI
       aws.region_config "us-west-2", :ami => CENTOS_AMI
       aws.tags = { "Name" => "andrew centos dev" ,
                    "Owner" => "Andrew Dunstan" }
