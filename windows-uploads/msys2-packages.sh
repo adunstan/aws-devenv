@@ -92,4 +92,4 @@ sed -i \
 	testit32.conf
 
 # required for TAP tests. 
-tar -z -xf /c/vfiles/uploads/IPC-Run-Win-0.94.tgz
+tar -z -xf /c/vfiles/windows-uploads/IPC-Run-Win-0.94.tgz

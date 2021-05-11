@@ -14,6 +14,7 @@ end
 
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'aws'
+ENV['ARGS'] ||= ''
 
 subnetId=""
 securityGroupId=""
@@ -71,7 +72,8 @@ Vagrant.configure("2") do |config|
 
     windows.vm.provision "file", source: "windows-uploads",
                          destination: 'c:\vfiles'
-    windows.vm.provision :shell, path: "windows-provision.ps1"
+    windows.vm.provision :shell, path: "windows-provision.ps1",
+                         args: ENV['ARGS'].split
     
     windows.vm.provider "aws" do |aws, override|
       override.winrm.password = :aws # won't matter except for Windows
