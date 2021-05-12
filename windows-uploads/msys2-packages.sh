@@ -27,18 +27,23 @@ pacman -S --needed --noconfirm \
 	   msys/zlib-devel
 
 echo alias vi=vim >> ~/.bashrc
+echo export EDITOR=vim >> ~/.bashrc
+echo export LESS=-iMx4R >> ~/.bashrc
 
 echo "shopt -s histappend" >> ~/.bashrc
 
-# my emacs setup
+# my emacs/vi setup
 # comment out if not wanted
 wget -q -O ademacs.tgz https://bitbucket.org/adunstan/myemacs/get/master.tar.gz
 tar -z -xf ademacs.tgz --strip-components=1 --exclude=README.md
 
 # For other tool chains, pick from
 # https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/
-
+#
+# or see http://winlibs.com/
+#
 # wget https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/7.3.0/threads-win32/sjlj/x86_64-7.3.0-release-win32-sjlj-rt_v5-rev0.7z/download#"
+
 
 # buildfarm client stuff
 
