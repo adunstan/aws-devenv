@@ -12,7 +12,7 @@ host=`grep RDPHostName "$t" | awk '{ print $2}'`
 user=`grep RDPUser "$t" | awk '{ print $2}'`
 pass=`grep RDPPassword "$t" | awk '{ print $2}'`
 echo "host=$host user=$user pass=$pass"
-sh -c "xfreerdp /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host &"
+sh -c "xfreerdp /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host /title:AWS-devenv &"
 rm -f -- "$t"
 trap - EXIT
 exit
