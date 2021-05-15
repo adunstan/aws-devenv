@@ -13,6 +13,6 @@ export AWS_DEFAULT_REGION AWS_PROFILE
 
 # get the security group id
 test -e ./settings && . ./settings
-
+echo "              \tDescription\tGroupId\tGroupName\tOwnerId\tVpcId"
 aws ec2 describe-security-groups --group-ids $securityGroupId --output text
 
