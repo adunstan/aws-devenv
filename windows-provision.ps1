@@ -3,9 +3,22 @@
 
 (iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')))>$null
 
+
+# set up non-admin user
+$loginName="pgrunner"
+$newPass="fr0bn1tz!X" #
+$desc="plain user to run postgres"
+$localHost=[ADSI]"WinNT://localhost"
+$newUser=$localHost.Create("user",$loginName);
+$newUser.setPassword($newPass);
+$newUser.put("HomeDirectory","c:\users\$loginName");
+$newUser.put("description",$desc);
+$newUser.setInfo();
+
+
 refreshenv
 
-$editors = 'vim', 'notepadplusplus'
+$editors = 'vim', 'notepadplusplus', 'emacs'
 choco install -y --no-progress --limit-output @editors
 
 $perl = 'StrawberryPerl'
