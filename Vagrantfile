@@ -62,27 +62,31 @@ Vagrant.configure("2") do |config|
   end
 
 
-  # to avoid running the script provisioners, do
-  # vagrant up --provision-with file [windows|ubuntu|centos]
+  ["windows","windows-1","windows-2","windows-3"].each do |machine|
 
-  config.vm.define "windows" do |windows|
 
-    windows.vm.communicator = "winrm"
-    windows.winrm.username = "Administrator"
+    # to avoid running the script provisioners, do
+    # vagrant up --provision-with file [windows|ubuntu|centos]
 
-    windows.vm.provision "file", source: "windows-uploads",
-                         destination: 'c:\vfiles'
-    windows.vm.provision :shell, path: "windows-provision.ps1",
-                         args: ENV['ARGS'].split
-    
-    windows.vm.provider "aws" do |aws, override|
-      override.winrm.password = :aws # won't matter except for Windows
-      aws.ami = WIN_AMI
-      aws.region_config "us-west-2", :ami => WIN_AMI
-      # Enable WinRM on the instance
-      aws.user_data = File.read("windows-userdata")
-      aws.tags = { "Name" => "andrew windows dev" ,
-                   "Owner" => "Andrew Dunstan" }
+    config.vm.define machine do |windows|
+
+      windows.vm.communicator = "winrm"
+      windows.winrm.username = "Administrator"
+
+      windows.vm.provision "file", source: "windows-uploads",
+                           destination: 'c:\vfiles'
+      windows.vm.provision :shell, path: "windows-provision.ps1",
+                           args: ENV['ARGS'].split
+
+      windows.vm.provider "aws" do |aws, override|
+        override.winrm.password = :aws # won't matter except for Windows
+        aws.ami = WIN_AMI
+        aws.region_config "us-west-2", :ami => WIN_AMI
+        # Enable WinRM on the instance
+        aws.user_data = File.read("windows-userdata")
+        aws.tags = { "Name" => "andrew windows dev" ,
+                     "Owner" => "Andrew Dunstan" }
+      end
     end
   end
   
