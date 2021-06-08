@@ -75,6 +75,7 @@ Vagrant.configure("2") do |config|
 
       windows.vm.provision "file", source: "windows-uploads",
                            destination: 'c:\vfiles'
+      # e.g. ARGS=NOMSVC vagrant up ... or ARGS=NOMSYS2 vagrant up ...
       windows.vm.provision :shell, path: "windows-provision.ps1",
                            args: ENV['ARGS'].split
 
