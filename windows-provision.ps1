@@ -6,7 +6,7 @@
 
 # set up non-admin user
 $loginName="pgrunner"
-$newPass="fr0bn1tz!X" #
+$newPass="fr0bn1tz!X" # should be changed
 $desc="plain user to run postgres"
 $localHost=[ADSI]"WinNT://localhost"
 $newUser=$localHost.Create("user",$loginName);
@@ -14,7 +14,6 @@ $newUser.setPassword($newPass);
 $newUser.put("HomeDirectory","c:\users\$loginName");
 $newUser.put("description",$desc);
 $newUser.setInfo();
-
 
 refreshenv
 
@@ -46,7 +45,9 @@ if ( $args -contains "NOMSVC" )
 }
 else
 {
-	$utils = 'git', 'hg', 'patch', 'Wget', 'Less', 'sed', 'winflexbison', '7zip', 'gzip', 'zip', 'unzip', 'diffutils'
+	# the choco 'patch' package sucks, demands an admin password for everything
+	# use patch from msys2 if necessary. Buildfarm doesn't require patch.
+	$utils = 'git', 'hg', 'Wget', 'Less', 'sed', 'winflexbison', '7zip', 'gzip', 'zip', 'unzip', 'diffutils'
 
 	# setup for MSVC utils
 	choco install -y --no-progress --limit-output @utils
@@ -60,3 +61,5 @@ else
 	# choco install -y --no-progress --limit-output visualstudio2019-workload-nativedesktop --package-parameters "--includeOptional"
 	# choco install -y --no-progress --limit-output visualstudio2019-workload-nativegame --package-parameters "--includeOptional"
 }
+
+Write-Output "Remember to change the pgrunner password."
