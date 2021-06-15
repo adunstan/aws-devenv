@@ -1,0 +1,49 @@
+AWS Devenv
+==========
+
+This is a bunch of utilities to alow easy setting up of some development
+environments on AWS. Supported are Ubuntu, Centos and Windows.
+
+The scripts provide for setting up a VPC and securty groups for running
+isolated from other systems. By default only access from the user's
+original network is provided, although there are also utilities for adding
+and removing access.
+
+Prerequisites:
+--------------
+
+* AWS CLI
+* AWS credentials that allow for setting up all the components
+* Vagrant
+* vagrant-aws and vagrant-aws-winrm plugins
+* xfreerdp
+
+You need to apply the patch to the Vagrant plugin to allow region overriding.
+
+Getting Started
+---------------
+
+Create a file called `myenv`. It needs to have 2 things:
+
+. `AWS_PROFILE=profilename`
+. one or more AMI lines, e.g.
+    `WIN_AMI="ami-0b7ebdd52b84c244d"`
+	possible keys are `WIN_AMI`, `CENTOS_AMI` and `UBUNTU_AMi`.
+
+Also possible are settings for:
+
+. `AWS_DEFAULT_REGION`
+. `AZ` - the availability zone to use
+. `KEY` - the name of an SSH key to generate and/or use
+
+Run once: `./aws_setup.sh`
+
+This will record details of the environment in a file called `settings`
+
+Now you can run `vagrant up <machinename>` where that's one of
+`windows`, `centos` or `ubuntu`.
+
+Once the machine is provisioned, you can connect to it like this
+
+. for the Unix machines, run `vagrant ssh <machinename>`
+. for Windows, run `vwinrdp`
