@@ -47,15 +47,18 @@ tar -z -xf ademacs.tgz --strip-components=1 --exclude=README.md
 
 # buildfarm client stuff
 
-mkdir bf
+
+# mkdir bf
+
+git clone https://github.com/PGBuildFarm/client-code.git bf
 
 cd bf
 
 mkdir root
 
-wget --no-verbose https://buildfarm.postgresql.org/downloads/latest-client.tgz
+# wget --no-verbose https://buildfarm.postgresql.org/downloads/latest-client.tgz
 
-tar -z --strip-components=1 -xf latest-client.tgz
+# tar -z --strip-components=1 -xf latest-client.tgz
 
 cp build-farm.conf.sample testit64.conf
 
@@ -71,6 +74,7 @@ sed -i \
 	-e '/--with-[^ ][^ ]*/d'  \
 	-e '/--enable-nls/ a\
             --with-openssl\
+            --enable-tap-tests\
        ' \
 	-e 's!build_root =>.*!build_root => "/home/Administrator/bf/root",!' \
 	-e 's/use_vpath[ ]*=>.*/use_vpath => 1,/' \
@@ -80,12 +84,15 @@ sed -i \
                PATH => "/mingw64/bin:/usr/bin/vendor_perl:$ENV{PATH}",\
                PERL5LIB => "/home/Administrator/bf/p5lib",\
        ' \
+	-e 's/(CC =>)/# \1/' \
 	-e '/config_env => {/ a\
                \
                MSYSTEM => "MINGW64",\
                MSYSTEM_CHOST => "x86_64-w64-mingw32",\
        ' \
 	testit64.conf
+
+:<<'EOComment'
 
 cp testit64.conf testit32.conf
 
@@ -95,6 +102,8 @@ sed -i \
 	-e '/MSYSTEM/ s/MINGW64/MINGW32/' \
 	-e '/MSYSTEM_CHOST/ s/x86_64/i686/' \
 	testit32.conf
+
+EOComment
 
 # required for TAP tests. 
 tar -z -xf /c/vfiles/windows-uploads/IPC-Run-Win-0.94.tgz
