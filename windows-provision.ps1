@@ -23,6 +23,10 @@ $newUser.put("HomeDirectory","c:\users\$loginName");
 $newUser.put("description",$desc);
 $newUser.setInfo();
 
+$password = ConvertTo-SecureString $newPass -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential ($loginName, $password)
+
+
 refreshenv
 
 $editors = 'vim', 'notepadplusplus', 'emacs'
@@ -41,11 +45,14 @@ if ( $args -contains "NOMSYS2" )
 }
 else
 {
-	choco install -y --no-progress --limit-output msys2
+	# msys2 outputs esc-[3J which clears the screen's scroll buffer. Nasty.
+	# so we redirect the output
+	# find the log in c:\Windows\System32 if needed
+	choco install -y --no-progress --limit-output msys2 > msys2inst.log
 	c:\tools\msys64\usr\bin\bash -l '/c/vfiles/windows-uploads/msys2-packages.sh'
 }
 
-# choco install -y -postgresql12 --params '/Password:FooBar1234'
+# choco install -y postgresql12 --params '/Password:FooBar1234'
 # see https://community.chocolatey.org/packages/postgresql12
 # choco install -ia "--datadir d:\pgdata\12" postgresql12
 # see https://www.enterprisedb.com/edb-docs/d/postgresql/installation-getting-started/installation-guide-installers/10/PostgreSQL_Installation_Guide.1.16.html
@@ -70,6 +77,8 @@ else
 
 	refreshenv
 
+	# use the includeOptional form if you need to support old commits
+	# installs the 8.1 SDK which can be needed
 	choco install -y --no-progress --limit-output visualstudio2019-workload-vctools --install-args="--add Microsoft.VisualStudio.Component.VC.CLI.Support"
 	# choco install -y --no-progress --limit-output visualstudio2019-workload-nativedesktop --package-parameters "--includeOptional"
 	# choco install -y --no-progress --limit-output visualstudio2019-workload-nativegame --package-parameters "--includeOptional"
@@ -82,6 +91,7 @@ else
 	Remove-Item alias:curl
 	wget -q -O ademacs.tgz http://bitbucket.org/adunstan/myemacs/get/master.tar.gz
 	tar -z -C $env:APPDATA --strip-components=1 -xf ademacs.tgz
+	# tar -z -C \Users\pgrunner\AppData\Roaming --strip-components=1 -xf ademacs.tgz
 }
 
 Write-Output "Remember to change the pgrunner password."

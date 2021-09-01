@@ -35,6 +35,7 @@ eval (File.read('settings'))
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
   config.vm.synced_folder ".", "/vagrant", disabled: true;
+  config.vm.network "public_network", auto_config: false
   
   config.vm.provider :aws do |aws, override|
 
@@ -103,7 +104,7 @@ Vagrant.configure("2") do |config|
        Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
        SHELL
-    # windows.vm.provision :shell, path: "windows-provision.ps1"
+    windows.vm.provision :shell, path: "windows-provision-bare.ps1"
     
     windows.vm.provider "aws" do |aws, override|
       override.winrm.password = :aws # won't matter except for Windows
@@ -128,6 +129,26 @@ Vagrant.configure("2") do |config|
       aws.ami = UBUNTU_AMI
       aws.region_config "us-west-2", :ami => UBUNTU_AMI
       aws.tags = { "Name" => "andrew ubuntu dev" ,
+                   "Owner" => "Andrew Dunstan" }
+    end
+  end
+
+  config.vm.define "fbsd12" do |fbsd12|
+
+    fbsd12.ssh.username = "ec2-user"
+    fbsd12.ssh.shell = "sh"
+    
+#    fbsd12.vm.provision "file", source: "fbsd-uploads",
+#                         destination: '/home/fbsd12/vfiles'
+    fbsd12.vm.provision :shell, :path => "fbsd12-provision.sh",
+                        privileged: false
+
+    fbsd12.vm.provider "aws" do |aws, override|
+      override.ssh.username = "ec2-user"
+      override.ssh.shell = "sh"
+      aws.ami = FBSD_AMI
+      aws.region_config "us-west-2", :ami => FBSD_AMI
+      aws.tags = { "Name" => "andrew fbsd12 dev" ,
                    "Owner" => "Andrew Dunstan" }
     end
   end

@@ -10,6 +10,7 @@ pacman -S --needed --noconfirm \
 	msys/vim \
 	msys/emacs \
 	msys/perl-Crypt-SSLeay \
+	mingw-w64-clang-x86_64-toolchain \
 	mingw-w64-x86_64-toolchain # 	mingw-w64-i686-toolchain # no 32 bit thanks
 
 # could do: pacman -S --needed --noconfirm development
@@ -84,7 +85,7 @@ sed -i \
                PATH => "/mingw64/bin:/usr/bin/vendor_perl:$ENV{PATH}",\
                PERL5LIB => "/home/Administrator/bf/p5lib",\
        ' \
-	-e 's/(CC =>)/# \1/' \
+	-e 's/\(CC =>\)/# \1/' \
 	-e '/config_env => {/ a\
                \
                MSYSTEM => "MINGW64",\
