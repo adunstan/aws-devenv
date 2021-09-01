@@ -13,19 +13,9 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 # (rather than invoking refreshenv.cmd, the *batch file* for use with cmd.exe)
 
 # set up non-admin user
-$loginName="pgrunner"
-$newPass="fr0bn1tz!X" # should be changed
-$desc="plain user to run postgres"
-$localHost=[ADSI]"WinNT://localhost"
-$newUser=$localHost.Create("user",$loginName);
-$newUser.setPassword($newPass);
-$newUser.put("HomeDirectory","c:\users\$loginName");
-$newUser.put("description",$desc);
-$newUser.setInfo();
 
-$password = ConvertTo-SecureString $newPass -AsPlainText -Force
-$credential = New-Object System.Management.Automation.PSCredential ($loginName, $password)
-
+Import-Module -Name c:\vfiles\windows-uploads\user-profile.psm1
+Create-NewProfile -Username 'pgrunner' -Password 'fr0bn1tz!X'
 
 refreshenv
 
@@ -91,7 +81,7 @@ else
 	Remove-Item alias:curl
 	wget -q -O ademacs.tgz http://bitbucket.org/adunstan/myemacs/get/master.tar.gz
 	tar -z -C $env:APPDATA --strip-components=1 -xf ademacs.tgz
-	# tar -z -C \Users\pgrunner\AppData\Roaming --strip-components=1 -xf ademacs.tgz
+	tar -z -C \Users\pgrunner\AppData\Roaming --strip-components=1 -xf ademacs.tgz
 }
 
 Write-Output "Remember to change the pgrunner password."
