@@ -36,6 +36,10 @@ Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
   config.vm.synced_folder ".", "/vagrant", disabled: true;
   config.vm.network "public_network", auto_config: false
+
+
+  # for default user names see
+  # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-users.html
   
   config.vm.provider :aws do |aws, override|
 
