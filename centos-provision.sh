@@ -2,6 +2,10 @@
 
 yum install -y epel-release
 
+yum install -y snapd
+systemctl enable --now snapd.socket
+ln -s /var/lib/snapd/snap /snap
+
 yum install -y \
         git \
         make \
@@ -37,5 +41,13 @@ yum install -y \
         valgrind
 
 yum install -y \
-	vim \
-	emacs-nox
+	vim
+
+yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+wget -nv -O /home/centos/ademacs.tgz http://bitbucket.org/adunstan/myemacs/get/master.tar.gz
+
+su - centos -c "tar -z --strip-components=1 -xf ademacs.tgz"
+
+snap install emacs --classic 2>/dev/null || { sleep 3; snap install emacs --classic; }
+
