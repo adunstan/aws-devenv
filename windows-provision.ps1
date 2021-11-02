@@ -67,6 +67,10 @@ else
 
 	refreshenv
 
+	git config --system core.eol lf
+	git config --system core.autocrlf input
+	# git config --get --show-origin core.eol
+
 	# use the includeOptional form if you need to support old commits
 	# installs the 8.1 SDK which can be needed
 	choco install -y --no-progress --limit-output visualstudio2019-workload-vctools --install-args="--add Microsoft.VisualStudio.Component.VC.CLI.Support"
