@@ -29,7 +29,9 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
         libldap2-dev \
         libkrb5-dev \
         gettext \
-        libipc-run-perl
+        libipc-run-perl \
+		libxml2-utils \
+		xsltproc
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y emacs-nox
 

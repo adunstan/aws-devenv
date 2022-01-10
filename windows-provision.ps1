@@ -17,6 +17,10 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 Import-Module -Name c:\vfiles\windows-uploads\user-profile.psm1
 Create-NewProfile -Username 'pgrunner' -Password 'fr0bn1tz!X'
 
+choco install -y Carbon
+Import-Module Carbon
+Grant-CPrivilege -Identity pgrunner -Privilege SeCreateSymbolicLinkPrivilege
+
 refreshenv
 
 $editors = 'vim', 'notepadplusplus', 'emacs'
