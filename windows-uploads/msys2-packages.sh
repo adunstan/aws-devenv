@@ -10,6 +10,7 @@ pacman -S --needed --noconfirm \
 	msys/vim \
 	msys/emacs \
 	msys/perl-Crypt-SSLeay \
+	msys/perl-LWP-Protocol-https \
 	mingw-w64-clang-x86_64-toolchain \
 	mingw-w64-x86_64-toolchain # 	mingw-w64-i686-toolchain # no 32 bit thanks
 
@@ -32,6 +33,8 @@ echo export EDITOR=vim >> ~/.bashrc
 echo export LESS=-iMx4R >> ~/.bashrc
 
 echo "shopt -s histappend" >> ~/.bashrc
+
+echo "content_disposition = on" >> ~/.wgetrc
 
 # my emacs/vi setup
 # comment out if not wanted

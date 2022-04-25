@@ -35,4 +35,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y emacs-nox
 
+apt install curl ca-certificates gnupg
+curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg >/dev/null
+echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+apt update
 

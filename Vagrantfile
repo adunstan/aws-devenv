@@ -34,6 +34,7 @@ eval (File.read('settings'))
 
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
+  config.vm.box_check_update = false
   config.vm.synced_folder ".", "/vagrant", disabled: true;
   config.vm.network "public_network", auto_config: false
 
@@ -103,12 +104,13 @@ Vagrant.configure("2") do |config|
 
     windows.vm.provision "file", source: "windows-uploads",
                          destination: 'c:\vfiles'
-    windows.vm.provision "shell", inline: <<-SHELL
-
-       Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-
-       SHELL
-    windows.vm.provision :shell, path: "windows-provision-bare.ps1"
+#    windows.vm.provision "shell", inline: <<-SHELL
+#
+#       Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+#
+#       SHELL
+#    windows.vm.provision :shell, path: "windows-provision-bare.ps1"
+    windows.vm.provision :shell, path: "newprov.ps1"
     
     windows.vm.provider "aws" do |aws, override|
       override.winrm.password = :aws # won't matter except for Windows

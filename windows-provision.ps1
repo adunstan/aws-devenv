@@ -1,5 +1,7 @@
 
 
+# turn off windows defender realtime scanning
+Set-MpPreference -DisableRealtimeMonitoring $true
 
 (iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')))>$null
 
