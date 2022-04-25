@@ -1,0 +1,189 @@
+Usage: msys-installer.exe [options] command <args> <key=value>
+
+Qt Installer Framework supports both GUI and headless mode. The installation operations can be invoked with the following commands and options. Note that the options marked with "CLI" are available in the headless mode only.
+
+Commands:
+  in, install - install default or selected packages - <pkg ...>
+  ch, check-updates - show available updates information on maintenance tool
+  up, update - update all or selected packages - <pkg ...>
+  rm, remove - uninstall packages and their child components - <pkg ...>
+  li, list - list currently installed packages
+  se, search - search available packages - <regexp>
+  pr, purge - uninstall all packages and remove entire program directory
+
+Options:
+  -?, -h, --help                                 Displays help on commandline
+                                                 options.
+  --help-all                                     Displays help including Qt
+                                                 specific options.
+  -v, --version                                  Displays version information.
+  -d, --verbose                                  Verbose mode. Prints out more
+                                                 information. Adding -d or
+                                                 --verbose more than once
+                                                 increases verbosity.
+  -g, --logging-rules <rules>                    Enables logging according to
+                                                 passed rules. Comma separated
+                                                 logging rules have the
+                                                 following syntax:
+                                                 loggingCategory=true/false.
+                                                 Passing empty logging rules
+                                                 enables all logging categories.
+                                                 The following rules enable a
+                                                 single category: ifw.*=false,
+                                                 ifw.category=true. The
+                                                 following logging categories
+                                                 are available:
+                                                 ifw.package.displayname
+                                                 ifw.package.description
+                                                 ifw.package.version
+                                                 ifw.package.installedversion
+                                                 ifw.package.releasedate
+                                                 ifw.package.installdate
+                                                 ifw.package.updatedate
+                                                 ifw.package.name
+                                                 ifw.package.dependencies
+                                                 ifw.package.autodependon
+                                                 ifw.package.virtual
+                                                 ifw.package.sortingpriority
+                                                 ifw.package.script
+                                                 ifw.package.default
+                                                 ifw.package.essential
+                                                 ifw.package.forcedinstallation
+                                                 ifw.package.replaces
+                                                 ifw.package.downloadablearchive
+                                                 s
+                                                 ifw.package.requiresadminrights
+                                                 ifw.package.checkable
+                                                 ifw.package.licenses
+                                                 ifw.package.uncompressedsize
+                                                 ifw.package.compressedsize
+                                                 ifw.installer.installlog
+                                                 ifw.server
+  --ar, --add-repository <URI,...>               Add a local or remote
+                                                 repository to the list of user
+                                                 defined repositories.
+  --at, --add-temp-repository <URI,...>          Add a local or remote
+                                                 repository to the list of
+                                                 temporary available
+                                                 repositories.
+  --st, --set-temp-repository <URI,...>          Set a local or remote
+                                                 repository as temporary
+                                                 repository, it is the only one
+                                                 used during fetch.
+                                                 Note: URI must be prefixed with
+                                                 the protocol, i.e. file:///,
+                                                 https://, http:// or ftp://.
+  --sp, --system-proxy                           Use system proxy on Windows
+                                                 and Linux. This option has no
+                                                 effect on macOS. (Default)
+  --np, --no-proxy                               Do not use system proxy.
+  --su, --start-updater                          Start application in updater
+                                                 mode. This will override the
+                                                 internal marker that is used to
+                                                 distinguish which kind of
+                                                 binary is currently running.
+  --sm, --start-package-manager                  Start application in package
+                                                 manager mode. This will
+                                                 override the internal marker
+                                                 that is used to distinguish
+                                                 which kind of binary is
+                                                 currently running.
+  --sr, --start-uninstaller                      Start application in
+                                                 uninstaller mode. This will
+                                                 override the internal marker
+                                                 that is used to distinguish
+                                                 which kind of binary is
+                                                 currently running.
+  -t, --root <directory>                         [CLI] Set installation root
+                                                 directory.
+  -p, --platform <plugin>                        Use the specified platform
+                                                 plugin.
+  --nf, --no-force-installations                 Allow deselecting components
+                                                 that are marked as forced.
+  --nd, --no-default-installations               Deselects components that are
+                                                 marked as default.
+  --ns, --no-size-checking                       Disable checking of free space
+                                                 for installation target.
+  --sv, --show-virtual-components                Show virtual components in
+                                                 installer and package manager.
+  -i, --install-compressed-repository <URI,...>  Installs QBSP or 7z file. The
+                                                 QBSP (Board Support Package)
+                                                 file must be a .7z file which
+                                                 contains a valid repository.
+  --cl, --create-local-repository                Create a local repository
+                                                 inside the installation
+                                                 directory. This option has no
+                                                 effect on online installers.
+  --am, --accept-messages                        [CLI] Accepts all message
+                                                 queries without user input.
+  --rm, --reject-messages                        [CLI] Rejects all message
+                                                 queries without user input.
+  --aa, --auto-answer <identifier=value>         [CLI] Automatically answers
+                                                 the message queries with the
+                                                 message identifier and button
+                                                 value. Several identifier=value
+                                                 pairs can be given separated
+                                                 with comma, for example
+                                                 --auto-answer
+                                                 message.id=Ok,message.id2=Cance
+                                                 l.
+  --da, --default-answer                         [CLI] Automatically answers to
+                                                 message queries with their
+                                                 default values.
+  --al, --accept-licenses                        [CLI] Accepts all licenses
+                                                 without user input.
+  --file-query <identifier=value>                [CLI] Automatically sets the
+                                                 QFileDialog values
+                                                 getExistingDirectory() or
+                                                 getOpenFileName() requested by
+                                                 install script. Several
+                                                 identifier=value pairs can be
+                                                 given separated with comma, for
+                                                 example --file-query
+                                                 filedialog.id=C:Temp,filedialog
+                                                 .id2=C:Temp2
+  -c, --confirm-command                          [CLI] Confirms starting of
+                                                 installation, update or removal
+                                                 of components without user
+                                                 input.
+  -s, --script <file>                            Execute the script given as
+                                                 argument.
+  --ss, --start-server <mode, socketname, key>   Starts the application as
+                                                 headless process waiting for
+                                                 commands to execute. Mode can
+                                                 be DEBUG or PRODUCTION. In
+                                                 DEBUG mode, the option values
+                                                 can be omitted. Note: The
+                                                 server will not shutdown on his
+                                                 own, you need to quit the
+                                                 process by hand.
+  --sc, --start-client <socketname, key>         Starts the application to
+                                                 debug the client-server
+                                                 communication. If a value is
+                                                 omitted, the client will use a
+                                                 default instead. Note: The
+                                                 server process is not started
+                                                 by the client application in
+                                                 that case, you need to start it
+                                                 on your own.
+  -q, --squish-port <port number>                Give a port where Squish can
+                                                 connect to. If no port is
+                                                 given, default port 11233 is
+                                                 used. Note: To enable Squish
+                                                 support you first need to build
+                                                 IFW with SQUISH_PATH parameter
+                                                 where SQUISH_PATH is pointing
+                                                 to your Squish installation
+                                                 folder: <path_to_qt>/bin/qmake
+                                                 -r SQUISH_PATH=<pat_to_squish>
+
+Arguments:
+  Command                                        Command to be run by
+                                                 installer. Note that this
+                                                 feature may be disabled by
+                                                 vendor.
+  Args                                           Extra arguments for command,
+                                                 each separated by space.
+  InstallerValue                                 Key-value pair to be set
+                                                 internally by the framework.
+
