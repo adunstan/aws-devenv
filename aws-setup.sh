@@ -38,10 +38,11 @@ aws ec2 create-route --route-table-id $routeTableId --destination-cidr-block 0.0
 
 
 securityGroupId=`aws ec2 create-security-group --group-name my-security-group --description "my-security-group" --vpc-id $vpcId --query 'GroupId' --output text`
-aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 22 --cidr $MYIP/32           # SSH
-aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 3389 --cidr $MYIP/32         # WinRDP
+aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 22        --cidr $MYIP/32    # SSH
+aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 3389      --cidr $MYIP/32    # WinRDP
 aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 5985-5986 --cidr $MYIP/32    # WinRM
-aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 5432 --cidr $MYIP/32         # PostgreSQL
+aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 5432      --cidr $MYIP/32    # PostgreSQL
+aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol -1                   --cidr 10.0.0.0/16 # local network connections
 
 echo securityGroupId=\"$securityGroupId\" | tee -a settings
 
