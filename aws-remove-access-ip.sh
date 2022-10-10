@@ -11,9 +11,10 @@ test -e ./myenv && . ./myenv
 
 export AWS_DEFAULT_REGION AWS_PROFILE
 
-# use arg if given, otherwise use out public address.
+# use arg if given, stripped of CIDR suffix, otherwise use our public address.
 
-MYIP=$1
+MYIP=`echo $1 | sed -e 's,/32,,'`
+
 
 # publiC IP in case you're behind a firewall
 test -z "$MYIP" && MYIP=`dig +short myip.opendns.com @resolver1.opendns.com`

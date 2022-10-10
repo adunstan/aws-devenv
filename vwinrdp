@@ -12,7 +12,12 @@ host=`grep RDPHostName "$t" | awk '{ print $2}'`
 user=`grep RDPUser "$t" | awk '{ print $2}'`
 pass=`grep RDPPassword "$t" | awk '{ print $2}'`
 # echo "HOST=$HOST host=$host user=$user pass=$pass"
-sh -c "xfreerdp /log-level:WARN /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host /title:AWS-$HOST &"
+SHARE=""
+if [ -d share ]
+then
+	SHARE=/drive:adshare,$PWD/share
+fi
+sh -c "xfreerdp /log-level:WARN /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host /title:AWS-$HOST $SHARE &"
 rm -f -- "$t"
 trap - EXIT
 exit
