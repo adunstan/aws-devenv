@@ -1,5 +1,6 @@
 
 
+
 # Workaround https://github.com/mitchellh/vagrant-aws/issues/566
 class Hash
   def slice(*keep_keys)
@@ -12,6 +13,9 @@ class Hash
   end unless Hash.method_defined?(:except)
 end
 
+# get the user's real name, strip off extension fields
+require 'etc'
+myname=Etc.getpwuid().gecos.sub(/,.*/,"")
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'aws'
 ENV['ARGS'] ||= ''
@@ -21,11 +25,12 @@ securityGroupId=""
 
 # settings needs at least subnetId and securityGroupId
 
-# profile needs to be set in myenv, KEY can be overridden there
+# AWS_PROFILE, KEY and REGION need to be set in myenv
 # myenv also contains AMI names
 
 AWS_PROFILE=""
-KEY = 'ad-devenv'
+KEY=""
+REGION=""
 
 load ('myenv')
 
@@ -59,7 +64,7 @@ Vagrant.configure("2") do |config|
     aws.security_groups = [ securityGroupId ]
     aws.subnet_id = subnetId 
 
-    aws.region = 'us-west-2'
+    aws.region = REGION
 
     aws.aws_profile = AWS_PROFILE
     
@@ -88,11 +93,11 @@ Vagrant.configure("2") do |config|
       windows.vm.provider "aws" do |aws, override|
         override.winrm.password = :aws # won't matter except for Windows
         aws.ami = WIN_AMI
-        aws.region_config "us-west-2", :ami => WIN_AMI
+        aws.region_config REGION, :ami => WIN_AMI
         # Enable WinRM on the instance
         aws.user_data = File.read("windows-userdata")
-        aws.tags = { "Name" => "andrew windows dev" ,
-                     "Owner" => "Andrew Dunstan" }
+        aws.tags = { "Name" => myname + " windows dev" ,
+                     "Owner" => myname }
       end
     end
   end
@@ -115,11 +120,11 @@ Vagrant.configure("2") do |config|
     windows.vm.provider "aws" do |aws, override|
       override.winrm.password = :aws # won't matter except for Windows
       aws.ami = WIN_AMI
-      aws.region_config "us-west-2", :ami => WIN_AMI
+      aws.region_config REGION, :ami => WIN_AMI
       # Enable WinRM on the instance
       aws.user_data = File.read("windows-userdata")
-      aws.tags = { "Name" => "andrew windows dev" ,
-                   "Owner" => "Andrew Dunstan" }
+      aws.tags = { "Name" => myname + " windows dev" ,
+                   "Owner" => myname }
     end
   end
   
@@ -133,9 +138,9 @@ Vagrant.configure("2") do |config|
 
     ubuntu.vm.provider "aws" do |aws, override|
       aws.ami = UBUNTU_AMI
-      aws.region_config "us-west-2", :ami => UBUNTU_AMI
-      aws.tags = { "Name" => "andrew ubuntu dev" ,
-                   "Owner" => "Andrew Dunstan" }
+      aws.region_config REGION, :ami => UBUNTU_AMI
+      aws.tags = { "Name" => myname + " ubuntu dev" ,
+                   "Owner" => myname }
     end
   end
 
@@ -153,9 +158,9 @@ Vagrant.configure("2") do |config|
       override.ssh.username = "ec2-user"
       override.ssh.shell = "sh"
       aws.ami = FBSD_AMI
-      aws.region_config "us-west-2", :ami => FBSD_AMI
-      aws.tags = { "Name" => "andrew fbsd12 dev" ,
-                   "Owner" => "Andrew Dunstan" }
+      aws.region_config REGION, :ami => FBSD_AMI
+      aws.tags = { "Name" => myname + " fbsd12 dev" ,
+                   "Owner" => myname }
     end
   end
 
@@ -169,9 +174,9 @@ Vagrant.configure("2") do |config|
 
     centos.vm.provider "aws" do |aws, override|
       aws.ami = CENTOS_AMI
-      aws.region_config "us-west-2", :ami => CENTOS_AMI
-      aws.tags = { "Name" => "andrew centos dev" ,
-                   "Owner" => "Andrew Dunstan" }
+      aws.region_config REGION, :ami => CENTOS_AMI
+      aws.tags = { "Name" => myname + " centos dev" ,
+                   "Owner" => myname }
     end
   end
 
