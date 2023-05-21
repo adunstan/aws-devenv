@@ -84,6 +84,8 @@ Vagrant.configure("2") do |config|
       windows.vm.communicator = "winrm"
       windows.winrm.username = "Administrator"
 
+      # windows.vm.provision :shell, path: "security-setup.ps1"
+
       windows.vm.provision "file", source: "windows-uploads",
                            destination: 'c:\vfiles'
       # e.g. ARGS=NOMSVC vagrant up ... or ARGS=NOMSYS2 vagrant up ...
@@ -106,6 +108,8 @@ Vagrant.configure("2") do |config|
 
     windows.vm.communicator = "winrm"
     windows.winrm.username = "Administrator"
+
+    # windows.vm.provision :shell, path: "security-setup.ps1"
 
     windows.vm.provision "file", source: "windows-uploads",
                          destination: 'c:\vfiles'
@@ -132,6 +136,8 @@ Vagrant.configure("2") do |config|
 
     ubuntu.ssh.username = "ubuntu"
     
+    ubuntu.vm.provision :shell, path: "security-setup.sh"
+
     ubuntu.vm.provision "file", source: "ubuntu-uploads",
                          destination: '/home/ubuntu/vfiles'
     ubuntu.vm.provision :shell, path: "ubuntu-provision.sh"
@@ -148,7 +154,10 @@ Vagrant.configure("2") do |config|
 
     fbsd12.ssh.username = "ec2-user"
     fbsd12.ssh.shell = "sh"
-    
+
+    # no curl/sudo on FBSD -- XXX fixme
+    # fbsd12.vm.provision :shell, path: "security-setup.sh"
+
 #    fbsd12.vm.provision "file", source: "fbsd-uploads",
 #                         destination: '/home/fbsd12/vfiles'
     fbsd12.vm.provision :shell, :path => "fbsd12-provision.sh",
@@ -168,6 +177,8 @@ Vagrant.configure("2") do |config|
 
     centos.ssh.username = "centos"
     
+    centos.vm.provision :shell, path: "security-setup.sh"
+
     centos.vm.provision "file", source: "centos-uploads",
                         destination: '/home/centos/vfiles'
     centos.vm.provision :shell, path: "centos-provision.sh"

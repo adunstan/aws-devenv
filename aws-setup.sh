@@ -25,17 +25,21 @@ aws ec2 attach-internet-gateway --internet-gateway-id $internetGatewayId --vpc-i
 
 echo internetGatewayId=\"$internetGatewayId\" | tee -a settings
 
-subnetId=`aws ec2 create-subnet --vpc-id $vpcId --cidr-block 10.0.0.0/16 --availability-zone $AZ --query 'Subnet.SubnetId' --output text`
+subnetId=`aws ec2 create-subnet --vpc-id $vpcId --cidr-block 10.0.0.0/24 --availability-zone $AZ --query 'Subnet.SubnetId' --output text`
+subnetId2=`aws ec2 create-subnet --vpc-id $vpcId --cidr-block 10.0.10.0/24 --availability-zone $AZ2 --query 'Subnet.SubnetId' --output text`
 
 echo subnetId=\"$subnetId\" | tee -a settings
+echo subnetId2=\"$subnetId2\" | tee -a settings
 
 routeTableId=`aws ec2 create-route-table --vpc-id $vpcId --query 'RouteTable.RouteTableId' --output text`
 echo routeTableId=\"$routeTableId\" | tee -a settings
 
 associationId=`aws ec2 associate-route-table --route-table-id $routeTableId --subnet-id $subnetId --query 'AssociationId' --output text`
+associationId2=`aws ec2 associate-route-table --route-table-id $routeTableId --subnet-id $subnetId2 --query 'AssociationId' --output text`
 echo associationId=\"$associationId\" | tee -a settings
-aws ec2 create-route --route-table-id $routeTableId --destination-cidr-block 0.0.0.0/0 --gateway-id $internetGatewayId > /dev/null
+echo associationId2=\"$associationId2\" | tee -a settings
 
+aws ec2 create-route --route-table-id $routeTableId --destination-cidr-block 0.0.0.0/0 --gateway-id $internetGatewayId > /dev/null
 
 securityGroupId=`aws ec2 create-security-group --group-name my-security-group --description "my-security-group" --vpc-id $vpcId --query 'GroupId' --output text`
 aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 22        --cidr $MYIP/32    # SSH

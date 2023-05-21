@@ -2,3 +2,5 @@ myenv
 settings
 .vagrant
 /share
+/security-setup.*
+

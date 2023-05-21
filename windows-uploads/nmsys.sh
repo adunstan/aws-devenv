@@ -11,7 +11,8 @@ pacman -S --needed --noconfirm \
 	   ucrt64/mingw-w64-ucrt-x86_64-gcc \
 	   ucrt64/mingw-w64-ucrt-x86_64-zlib \
 	   ucrt64/mingw-w64-ucrt-x86_64-ccache \
-	   ucrt64/mingw-w64-ucrt-x86_64-tools-git
+	   ucrt64/mingw-w64-ucrt-x86_64-tools-git \
+	   ucrt64/mingw-w64-ucrt-x86_64-make
 
 # do these next two export steps so you don't need to relogin
 
