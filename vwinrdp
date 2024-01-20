@@ -1,6 +1,6 @@
 #!/bin/sh
 #[...]
-t=$(tempfile) || exit
+t=$(mktemp blurflXXXX) || exit
 trap "rm -f -- '$t'" EXIT
 HOST=$1
 if [ -z "$HOST" ]
@@ -12,12 +12,15 @@ host=`grep RDPHostName "$t" | awk '{ print $2}'`
 user=`grep RDPUser "$t" | awk '{ print $2}'`
 pass=`grep RDPPassword "$t" | awk '{ print $2}'`
 # echo "HOST=$HOST host=$host user=$user pass=$pass"
+
 SHARE=""
 if [ -d share ]
 then
-	SHARE=/drive:adshare,$PWD/share
+    SHARE=/drive:adshare,$PWD/share
 fi
-sh -c "xfreerdp /log-level:WARN /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host /title:AWS-$HOST $SHARE &"
+
+echo "sh -c \"xfreerdp /log-level:WARN /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host /title:AWS-$HOST $SHARE &\" " > $HOST.run
+. ./$HOST.run
 rm -f -- "$t"
 trap - EXIT
 exit
