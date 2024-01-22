@@ -32,7 +32,7 @@ Create a file called `myenv`. It needs to have 2 things:
 
 Also possible are settings for:
 
-. `AWS_DEFAULT_REGION`
+. `AWS_REGION`
 . `AZ` - the availability zone to use
 . `KEY` - the name of an SSH key to generate and/or use
 

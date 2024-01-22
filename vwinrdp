@@ -19,7 +19,10 @@ then
     SHARE=/drive:adshare,$PWD/share
 fi
 
-echo "sh -c \"xfreerdp /log-level:WARN /u:$user /p:'$pass' /cert:ignore /size:80% /v:$host /title:AWS-$HOST $SHARE &\" " > $HOST.run
+# escape a $ sign in the password
+pass=`echo "$pass" | sed -e 's/\\$/\\\\$/g'`
+
+echo "sh -c \"xfreerdp /log-level:WARN /u:$user /p:'$pass' /cert:ignore /size:1850x1000 /v:$host /title:AWS-$HOST $SHARE &\" " > $HOST.run
 . ./$HOST.run
 rm -f -- "$t"
 trap - EXIT

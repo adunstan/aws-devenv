@@ -3,4 +3,5 @@ settings
 .vagrant
 /share
 /security-setup.*
+/*.run
 

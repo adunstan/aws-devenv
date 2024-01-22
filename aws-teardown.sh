@@ -1,14 +1,14 @@
 
 # need
 
-: ${AWS_DEFAULT_REGION:=us-west-2}
+: ${AWS_REGION:=us-west-2}
 : ${AWS_PROFILE:=devenv}
 : ${AZ:=us-west-2a}
 : ${KEY:=ad-devenv}
 
 test -e ./myenv && . ./myenv
 
-export AWS_DEFAULT_REGION AWS_PROFILE AZ KEY
+export AWS_REGION AWS_PROFILE AZ KEY
 
 test -e ./settings && . ./settings
 

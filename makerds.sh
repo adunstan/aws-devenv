@@ -9,7 +9,7 @@ DB=testpgl-amd
 PW=blurfl964
 REPLPW=splog1fy.x
 SGS=$securityGroupId
-export AWS_DEFAULT_REGION=$REGION
+export AWS_REGION=$REGION
 export AWS_PROFILE
 
 command -v psql > /dev/null
